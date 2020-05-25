@@ -38,7 +38,7 @@ int filterValue = 80;
 String bluetoothData = "";
 String lastBluetoothCommand = "";
 uint32_t lastColor = "";
-String resetCommand = "xx";
+String resetCommand = "x";
 #define COMMAND_ACTION_ARRAY_SIZE 8
 
 
@@ -83,14 +83,14 @@ void setup() {
     //which decide what to do after an incoming bluetooth command 
     //and whether audio values are needed
     //parameters: (command, function, needsAudioData, callOnce, expectsColor)
-    commandActions[0] = CommandAction("off", clearStrip, false, true, false);
-    commandActions[1] = CommandAction("vu1", vuMeter1, true, false, false);
-    commandActions[2] = CommandAction("vu2", vuMeter2, true, false, true);
-    commandActions[3] = CommandAction("3pieces", seperateStripIn3PiecesWithoutFilter, true, false, false);
-    commandActions[4] = CommandAction("wave", wave, true, false, false);
-    commandActions[5] = CommandAction("initial", initialAnimation, false, true, false);//For manually testing initial animation
-    commandActions[6] = CommandAction("lamp", lamp, false, true, true);
-    commandActions[7] = CommandAction("wholeStrip", entireStrip, true, false, true);
+    commandActions[0] = CommandAction("!", clearStrip, false, true, false);
+    commandActions[1] = CommandAction("1", vuMeter1, true, false, false);
+    commandActions[2] = CommandAction("2", vuMeter2, true, false, true);
+    commandActions[3] = CommandAction("3", seperateStripIn3PiecesWithoutFilter, true, false, false);
+    commandActions[4] = CommandAction("4", wave, true, false, false);
+    commandActions[5] = CommandAction("5", initialAnimation, false, true, false);//For manually testing initial animation
+    commandActions[6] = CommandAction("6", lamp, false, true, true);
+    commandActions[7] = CommandAction("7", entireStrip, true, false, true);
     /* 
      *  increment COMMAND_ACTION_ARRAY_SIZE and declare new elements for every new effect
      */
@@ -151,6 +151,8 @@ void vuMeter1(){
     for(int i=0; i < map(avg, 0, 1023, 0, 60); i++){
         strip.setPixelColor(start + i, strip.Color(i*4, 60 - i, map(spectrumValue[0], 0, 1023, 0, 60))); //Added blue flash for bass hit
         strip.setPixelColor(start - 1 - i, strip.Color(i*4, 60 - i, map(spectrumValue[0], 0, 1023, 0, 60)));
+        strip.setPixelColor(i, strip.Color(i*4, 60 - i, map(spectrumValue[0], 0, 1023, 0, 60))); //Added blue flash for bass hit
+        strip.setPixelColor(NUM_LEDS - 1 - i, strip.Color(i*4, 60 - i, map(spectrumValue[0], 0, 1023, 0, 60))); //Added blue flash for bass hit
     }
     strip.setBrightness(225);
     strip.show();
@@ -176,7 +178,7 @@ void vuMeter2(){
     strip.clear();
     for(int i=0; i<intensity; i++){
         strip.setPixelColor(i, lastColor);
-    }
+    }  
     strip.show();
     
     //fill_solid(leds, intensity, CRGB(0, 0, 250));
@@ -191,8 +193,19 @@ void wave(){
     int r = 0;
     int g = 0;
     int b = 0;
-    if(spectrumValue[0] > 700){
+    int avg_low = (spectrumValue[0] + spectrumValue[1] + spectrumValue[2]) / 3;
+    int avg_high = (spectrumValue[4] + spectrumValue[5] + spectrumValue[6]) / 3;
+
+   
+    if(avg_high > 500){
+        r = 80;
+        g = 169;
+        b = 178;
+    }
+    if(avg_low > 700){
+        r = 0;
         g = 200;
+        b = 0;
     }
     // Set the left most updateLEDs with the new color
     for(int i = 0; i < updateLEDS; i++) {
@@ -201,7 +214,7 @@ void wave(){
     FastLED.show();
     
     //printColor(nc);
-    delay(1);
+    delay(10);
 }
 
 void seperateStripIn7Pieces(){
@@ -337,7 +350,7 @@ void readBluetoothData(){
             char character;
             character = Serial.read(); // Reads the data from the serial port
             bluetoothData = bluetoothData + character;
-            Serial.println(bluetoothData);
+            //Serial.println(bluetoothData);
         }
         //Serial.println(bluetoothData);
         if(bluetoothData.endsWith(resetCommand)){
@@ -385,9 +398,9 @@ uint32_t getColorFromCommand(String command){
     // initialisieren und ersten Abschnitt erstellen
     ptr = strtok(color, delimiter);
 
-    Serial.println(command);
-    Serial.println(c);
-    Serial.println(color);
+    //Serial.println(command);
+    //Serial.println(c);
+    //Serial.println(color);
 
     int i = 0;
     while(ptr != NULL && i<3) {
@@ -397,9 +410,9 @@ uint32_t getColorFromCommand(String command){
         ptr = strtok(NULL, delimiter);
         i++;
     }
-    Serial.println(rgb[0]);
-    Serial.println(rgb[1]);
-    Serial.println(rgb[2]);
+    //Serial.println(rgb[0]);
+    //Serial.println(rgb[1]);
+    //Serial.println(rgb[2]);
     return strip.Color(rgb[0], rgb[1], rgb[2]);
 }
 
