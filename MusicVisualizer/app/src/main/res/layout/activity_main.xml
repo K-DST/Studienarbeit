@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/text_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/power"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="44dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:onClick="onPowerButtonPress"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/power_off"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/effects"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="176dp"
+        android:text="Effekte:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/rGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_home"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp"
+        android:gravity="center"
+        android:orientation="vertical"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/wave"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight=".335"
+            android:background="@drawable/radio_states"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Welle"
+            android:textColor="@drawable/radio_text" />
+
+        <RadioButton
+            android:id="@+id/vu1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight=".335"
+            android:background="@drawable/radio_states"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="VU-Meter (l)"
+            android:textColor="@drawable/radio_text" />
+
+        <RadioButton
+            android:id="@+id/vu2"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight=".335"
+            android:background="@drawable/radio_states"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="VU-Meter (m)"
+            android:textColor="@drawable/radio_text" />
+
+        <RadioButton
+            android:id="@+id/strip"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight=".335"
+            android:background="@drawable/radio_states"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="ges. Streifen"
+            android:textColor="@drawable/radio_text" />
+
+        <RadioButton
+            android:id="@+id/lamp"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight=".335"
+            android:background="@drawable/radio_states"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Lampe"
+            android:textColor="@drawable/radio_text" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/colorBtnVu"
+        android:layout_width="@dimen/box_size"
+        android:layout_height="@dimen/box_size"
+        android:layout_marginStart="12dp"
+
+        android:layout_marginTop="87dp"
+        android:background="@drawable/color_button"
+        android:onClick="onColorButtonPress"
+        app:layout_constraintStart_toEndOf="@+id/rGroup"
+        app:layout_constraintTop_toTopOf="@id/rGroup" />
+
+    <Button
+        android:id="@+id/colorBtnStrip"
+        android:layout_width="@dimen/box_size"
+        android:layout_height="@dimen/box_size"
+        android:layout_marginStart="12dp"
+
+        android:layout_marginTop="130dp"
+        android:background="@drawable/color_button"
+        android:onClick="onColorButtonPress"
+        app:layout_constraintStart_toEndOf="@+id/rGroup"
+        app:layout_constraintTop_toTopOf="@id/rGroup" />
+
+    <Button
+        android:id="@+id/colorBtnLamp"
+        android:layout_width="@dimen/box_size"
+        android:layout_height="@dimen/box_size"
+        android:layout_marginStart="12dp"
+
+        android:layout_marginTop="173dp"
+        android:background="@drawable/color_button"
+        android:onClick="onColorButtonPress"
+        app:layout_constraintStart_toEndOf="@+id/rGroup"
+        app:layout_constraintTop_toTopOf="@id/rGroup" />
+
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="524dp"
+        android:background="@drawable/radio_off"
+        android:onClick="reset"
+        android:text="Notfallreset"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
